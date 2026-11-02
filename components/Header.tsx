@@ -76,7 +76,7 @@ export default function Header() {
 
         <nav className="header__nav" aria-label="Primary">
           {nav.map((item) => (
-            <TLink key={item.href} href={item.href} className={pathname.startsWith(item.href) ? "is-active" : undefined}>
+            <TLink key={item.href} href={item.href} className={!item.href.includes("#") && pathname.startsWith(item.href) ? "is-active" : undefined}>
               <span data-text={item.label}>{item.label}</span>
             </TLink>
           ))}

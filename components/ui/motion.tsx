@@ -6,26 +6,33 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
 import { onIntro } from "@/lib/intro";
-import { scene, setScene } from "@/lib/scene";
+import { scene, setAmbient } from "@/lib/scene";
 
-type SceneConfig = Partial<Pick<typeof scene, "shape" | "color" | "x" | "y" | "scale" | "dim">>;
-
-/** Apply a scene configuration immediately (page-level default). */
-export function SceneSetter(props: SceneConfig) {
+/** Inner pages: park the camera somewhere along the ribbon in ambient mode. */
+export function AmbientScene({ x = 30, tone = 0.5, accent = "", dim = 0.75 }: { x?: number; tone?: number; accent?: string; dim?: number }) {
   useEffect(() => {
-    setScene({ x: 0, y: 0, scale: 1, dim: 1, ...props });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [JSON.stringify(props)]);
+    setAmbient({ x, tone, accent, dim });
+  }, [x, tone, accent, dim]);
   return null;
 }
 
-/** Apply a scene configuration while a section occupies the middle of the viewport. */
-export function useSceneSection(ref: RefObject<HTMLElement | null>, config: SceneConfig) {
+/** Fade the particles while a section (e.g. a text-heavy block) is on screen. */
+export function useSceneDim(ref: RefObject<HTMLElement | null>, dim: number) {
   useGSAP(() => {
     if (!ref.current) return;
-    const apply = () => setScene({ x: 0, y: 0, scale: 1, dim: 1, ...config });
-    ScrollTrigger.create({ trigger: ref.current, start: "top 55%", end: "bottom 45%", onEnter: apply, onEnterBack: apply });
-  }, [JSON.stringify(config)]);
+    let prev = scene.dim;
+    ScrollTrigger.create({
+      trigger: ref.current,
+      start: "top 60%",
+      end: "bottom 40%",
+      onToggle: (self) => {
+        if (self.isActive) {
+          prev = scene.dim;
+          scene.dim = dim;
+        } else scene.dim = prev;
+      },
+    });
+  }, [dim]);
 }
 
 /** Masked line-by-line reveal using GSAP SplitText. */

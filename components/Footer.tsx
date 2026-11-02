@@ -32,7 +32,7 @@ export default function Footer() {
           </span>
           <span className="mask">
             <span>
-              <em>next</em> with us
+              next with us
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M5 19 19 5M8 5h11v11" fill="none" stroke="currentColor" strokeWidth="1.5" />
               </svg>

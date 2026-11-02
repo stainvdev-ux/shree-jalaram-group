@@ -1,101 +1,153 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { TLink } from "@/components/Transition";
-import { Counter, FadeIn, Marquee, ScrubText, SplitReveal, useSceneSection } from "@/components/ui/motion";
-import { GOLD } from "@/lib/scene";
-import { group, news } from "@/lib/content";
+import { Counter, FadeIn, ScrubText, SplitReveal, useSceneDim } from "@/components/ui/motion";
+import { group, logo, photo, ventures } from "@/lib/content";
 
-export function Statement() {
+/** Glass cards for every venture; the first spans two columns. */
+export function VenturesGrid({ heading = true }: { heading?: boolean }) {
   const root = useRef<HTMLElement>(null);
-  useSceneSection(root, { shape: 8, color: GOLD, x: -1.9, y: 0, scale: 0.9, dim: 0.75 });
-
-  return (
-    <section ref={root} className="statement section">
-      <div className="container statement__grid">
-        <p className="eyebrow">(01) The group</p>
-        <div>
-          <ScrubText className="statement__text">
-            Headquartered in Mumbai, Shree Jalaram Group is a dynamic and diversified business conglomerate. Built on
-            entrepreneurial vision and operational excellence, our ventures span lottery and gaming, hospitality, food and
-            beverages, design, construction, manufacturing and technology, backed by over 10,000 dedicated professionals.
-          </ScrubText>
-          <FadeIn>
-            <TLink href="/about" className="btn" data-magnetic>
-              <span>About the group</span>
-              <i aria-hidden="true">→</i>
-            </TLink>
-          </FadeIn>
-        </div>
-      </div>
-
-      <div className="container stats">
-        {group.stats.map((s) => (
-          <FadeIn key={s.label} className="stat">
-            <strong>
-              <Counter value={s.value} suffix={s.suffix} grouping={s.value !== 1977} />
-            </strong>
-            <span>{s.label}</span>
-          </FadeIn>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-export function Sectors() {
-  const half = Math.ceil(group.sectors.length / 2);
-  return (
-    <section className="sectors" aria-label="Industries">
-      <Marquee items={group.sectors.slice(0, half)} />
-      <Marquee items={group.sectors.slice(half)} reverse className="marquee--outline" />
-    </section>
-  );
-}
-
-export function Values() {
-  const root = useRef<HTMLElement>(null);
-  useSceneSection(root, { shape: 13, color: GOLD, x: 1.9, y: 0.2, scale: 0.85, dim: 0.6 });
+  useSceneDim(root, 0.45);
 
   useGSAP(
     () => {
-      gsap.from(".value", {
+      gsap.from(".vcard", {
         y: 60,
         autoAlpha: 0,
-        stagger: 0.08,
         duration: 1.1,
         ease: "expo.out",
-        scrollTrigger: { trigger: ".values__grid", start: "top 80%" },
+        stagger: 0.06,
+        scrollTrigger: { trigger: ".vgrid", start: "top 85%" },
       });
     },
     { scope: root },
   );
 
   return (
-    <section ref={root} className="values section">
+    <section ref={root} className="section ventures" id="ventures">
       <div className="container">
-        <div className="values__head">
-          <p className="eyebrow">(03) What drives us</p>
+        {heading && (
+          <div className="section-head">
+            <p className="eyebrow">Our ventures</p>
+            <SplitReveal as="h2" className="display-2">
+              Thirteen ventures.
+              <br />
+              One group.
+            </SplitReveal>
+            <FadeIn className="section-head__lede">
+              <p>Each led with the same commitment to quality, trust and long term value, across eleven industries.</p>
+            </FadeIn>
+          </div>
+        )}
+        <div className="vgrid">
+          {ventures.map((v, i) => (
+            <TLink
+              key={v.slug}
+              href={`/ventures/${v.slug}`}
+              className={`vcard${i === 0 ? " vcard--wide" : ""}`}
+              style={{ ["--accent" as string]: v.accent }}
+              data-cursor="view"
+            >
+              <span className="vcard__media" aria-hidden="true">
+                <Image src={photo(v.slug)} alt="" fill sizes="(max-width: 768px) 92vw, (max-width: 1200px) 46vw, 31vw" />
+              </span>
+              <span className="vcard__top">
+                <span className="vcard__logo">
+                  <Image src={logo(v.slug)} alt="" width={72} height={72} />
+                </span>
+                <span className="vcard__num">{String(i + 1).padStart(2, "0")}</span>
+              </span>
+              <span className="vcard__body">
+                <span className="tag">{v.sector}</span>
+                <span className="vcard__name">{v.name}</span>
+                <span className="vcard__line">{v.tagline}</span>
+              </span>
+              <span className="vcard__arrow" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
+              </span>
+            </TLink>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function Statement() {
+  const root = useRef<HTMLElement>(null);
+  useSceneDim(root, 0.35);
+  return (
+    <section ref={root} className="section statement">
+      <div className="container">
+        <p className="eyebrow">The Group</p>
+        <ScrubText className="statement__text">
+          Headquartered in Mumbai, Shree Jalaram Group is a diversified business conglomerate built on entrepreneurial
+          vision and operational excellence, backed by over 10,000 dedicated professionals.
+        </ScrubText>
+        <div className="stats">
+          {group.stats.map((s) => (
+            <FadeIn key={s.label} className="stat">
+              <strong>
+                <Counter value={s.value} suffix={s.suffix} grouping={s.value !== 1977} />
+              </strong>
+              <span>{s.label}</span>
+            </FadeIn>
+          ))}
+        </div>
+        <FadeIn className="statement__cta">
+          <TLink href="/about" className="btn" data-magnetic>
+            <span>About the Group</span>
+            <i aria-hidden="true">→</i>
+          </TLink>
+        </FadeIn>
+      </div>
+    </section>
+  );
+}
+
+export function ValuesSection() {
+  const root = useRef<HTMLElement>(null);
+  useSceneDim(root, 0.35);
+  useGSAP(
+    () => {
+      gsap.from(".value", {
+        y: 50,
+        autoAlpha: 0,
+        stagger: 0.07,
+        duration: 1.1,
+        ease: "expo.out",
+        scrollTrigger: { trigger: ".values__grid", start: "top 82%" },
+      });
+    },
+    { scope: root },
+  );
+  return (
+    <section ref={root} className="section values">
+      <div className="container">
+        <div className="section-head">
+          <p className="eyebrow">What drives us</p>
           <SplitReveal as="h2" className="display-2">
-            Built on <em>integrity</em>,
+            Built on integrity,
             <br />
             driven by excellence.
           </SplitReveal>
         </div>
-
         <div className="vm">
-          <FadeIn className="vm__item">
+          <FadeIn className="glass vm__item">
             <p className="eyebrow">Our vision</p>
             <p>{group.vision}</p>
           </FadeIn>
-          <FadeIn className="vm__item" delay={0.1}>
+          <FadeIn className="glass vm__item" delay={0.08}>
             <p className="eyebrow">Our mission</p>
             <p>{group.mission}</p>
           </FadeIn>
         </div>
-
         <div className="values__grid">
           {group.values.map((v, i) => (
             <article key={v.title} className="value">
@@ -105,58 +157,6 @@ export function Values() {
             </article>
           ))}
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function NewsList({ limit, showHead = true }: { limit?: number; showHead?: boolean }) {
-  const root = useRef<HTMLElement>(null);
-  useSceneSection(root, { shape: 11, color: "#6f8fe8", x: -2, y: 0, scale: 0.8, dim: 0.45 });
-  const items = limit ? news.slice(0, limit) : news;
-
-  useGSAP(
-    () => {
-      gsap.from(".news__row", {
-        y: 40,
-        autoAlpha: 0,
-        stagger: 0.06,
-        duration: 1,
-        ease: "expo.out",
-        scrollTrigger: { trigger: ".news__list", start: "top 85%" },
-      });
-    },
-    { scope: root },
-  );
-
-  return (
-    <section ref={root} className="news section">
-      <div className="container">
-        {showHead && (
-          <div className="news__head">
-            <p className="eyebrow">(04) In the news</p>
-            <SplitReveal as="h2" className="display-2">
-              Making <em>headlines</em>
-            </SplitReveal>
-          </div>
-        )}
-        <ul className="news__list">
-          {items.map((n) => (
-            <li key={n.title} className="news__row">
-              <span className="news__year">{n.year}</span>
-              <p className="news__title">{n.title}</p>
-              <span className="news__venture">{n.venture}</span>
-            </li>
-          ))}
-        </ul>
-        {limit && (
-          <FadeIn className="news__more">
-            <TLink href="/news" className="btn" data-magnetic>
-              <span>All news</span>
-              <i aria-hidden="true">→</i>
-            </TLink>
-          </FadeIn>
-        )}
       </div>
     </section>
   );

@@ -15,9 +15,7 @@ export default function Shell({ children }: { children: ReactNode }) {
   return (
     <SmoothScroll>
       <TransitionProvider>
-        <div className="sky" aria-hidden="true" />
         <Experience />
-        <div className="grain" aria-hidden="true" />
         <Header />
         <main id="main" className="main">
           {children}

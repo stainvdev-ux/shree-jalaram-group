@@ -20,7 +20,6 @@ function LenisGsapSync() {
     const tick = (time: number) => {
       lenis.raf(time * 1000);
       scene.scrollVelocity = lenis.velocity;
-      scene.scrollProgress = lenis.progress;
     };
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);

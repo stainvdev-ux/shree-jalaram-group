@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FadeIn, SceneSetter, SplitReveal } from "@/components/ui/motion";
+import { AmbientScene, FadeIn, SplitReveal } from "@/components/ui/motion";
 import ContactForm from "@/components/ContactForm";
 import { group } from "@/lib/content";
 
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <SceneSetter shape={0} color="#d9b26a" x={2.2} y={0.6} scale={0.7} dim={0.7} />
+      <AmbientScene x={92} tone={1} dim={0.75} />
       <section className="page-hero container">
         <FadeIn intro className="eyebrow" y={16}>
           (Contact)
@@ -19,7 +19,7 @@ export default function ContactPage() {
         <SplitReveal as="h1" intro className="display-1">
           Let&apos;s start a
           <br />
-          <em>conversation</em>
+          conversation
         </SplitReveal>
       </section>
 
@@ -46,7 +46,7 @@ export default function ContactPage() {
             </a>
           </FadeIn>
         </div>
-        <FadeIn className="contact__form" delay={0.1}>
+        <FadeIn className="contact__form glass" delay={0.1}>
           <ContactForm />
         </FadeIn>
       </section>

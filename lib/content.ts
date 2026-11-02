@@ -346,6 +346,7 @@ export const news = [
 ];
 
 export const nav = [
+  { href: "/#journey", label: "Journey" },
   { href: "/about", label: "About" },
   { href: "/ventures", label: "Ventures" },
   { href: "/news", label: "News" },
@@ -373,3 +374,101 @@ export const photo = (slug: string) => `${ASSET_HOST}/admin/uploads/${media[slug
 export const logo = (slug: string) => `${ASSET_HOST}/admin/uploads/company_logo/${media[slug][1]}_logo.png`;
 export const groupLogo = `${ASSET_HOST}/assets/img/logo.webp`;
 export const getVenture = (slug: string) => ventures.find((v) => v.slug === slug);
+
+// Milestones for the home-page journey. Years and facts come from the venture
+// descriptions and news headlines on shreejalaramgroup.com.
+export type Milestone = {
+  year: string;
+  tag: string;
+  title: string;
+  text: string;
+  venture?: string; // slug
+  href?: string;
+};
+
+export const milestones: Milestone[] = [
+  {
+    year: "1977",
+    tag: "Lottery",
+    title: "Golden Lotto begins the journey",
+    text: "Since 1977, Golden Lotto has been at the forefront of India's lottery industry, making the lottery experience engaging, transparent and accessible to players across the country.",
+    venture: "golden-lotto",
+  },
+  {
+    year: "2008",
+    tag: "Beverages",
+    title: "Cloud9 is launched",
+    text: "Cloud9 Beverages enters the market with an energy drink portfolio, on its way to becoming one of India's most recognised and fastest growing energy drink brands.",
+    venture: "cloud9-beverages",
+  },
+  {
+    year: "2011",
+    tag: "Award",
+    title: "Frost & Sullivan Product Excellence Award",
+    text: "Cloud9 is honoured with the Frost & Sullivan Product Excellence Award in the Indian energy drinks category, a benchmark for the industry.",
+    venture: "cloud9-beverages",
+  },
+  {
+    year: "2015",
+    tag: "Gaming",
+    title: "Sikkim clears the way for India's first betting shops",
+    text: "A landmark decision in Sikkim opens the door to regulated sports betting centres in India.",
+    venture: "golden-gaming",
+  },
+  {
+    year: "2016",
+    tag: "Gaming",
+    title: "India's first online sports betting centre",
+    text: "The first online sports betting centre attracts tourists in Sikkim. Golden Gaming Sikkim now welcomes guests across Gangtok, Jorethang, Namchi and Singtam.",
+    venture: "golden-gaming",
+  },
+  {
+    year: "2021",
+    tag: "Casino",
+    title: "Casino Golden launches in Goa",
+    text: "Golden Gaming International launches Casino Golden in Goa, adding to an established presence across Sikkim and Nepal.",
+    venture: "casino-golden",
+  },
+  {
+    year: "2022",
+    tag: "Hospitality",
+    title: "Ramada by Wyndham & Casino Golden open in Gangtok",
+    text: "56 rooms, The Trinity Restaurant & Bar, a heated rooftop pool, and the largest gaming destination in Sikkim: 15,000 sq. ft. with 32 live gaming tables.",
+    venture: "ramada-gangtok",
+  },
+  {
+    year: "2023",
+    tag: "Beverages",
+    title: "Driven to serve only the best",
+    text: "Cloud9 reaches over 30,000 retail outlets and 5,000 liquor stores, and some of India's most premium hotels, restaurants and pubs.",
+    venture: "cloud9-beverages",
+  },
+  {
+    year: "2024",
+    tag: "Sport",
+    title: "Cloud9 teams up with Mumbai City and Orangutan Gaming",
+    text: "Mumbai City announces Cloud9 as its energy drink partner, and Orangutan Gaming names Cloud9 its exclusive energy drink partner.",
+    venture: "cloud9-beverages",
+  },
+  {
+    year: "2024",
+    tag: "Design",
+    title: "An ashram in the maximum city",
+    text: "Colab Company, with over 90 projects delivered, creates an all-white holiday home in Mumbai.",
+    venture: "colab-company",
+  },
+  {
+    year: "2025",
+    tag: "Design",
+    title: "A sculptural retreat in Powai",
+    text: "A 2,200-square-foot home in Powai by Colab Company becomes a sculptural retreat of quiet sophistication.",
+    venture: "colab-company",
+  },
+  {
+    year: "Today",
+    tag: "The Group",
+    title: "13 ventures. 10,000+ people.",
+    text: "From lottery and gaming to hospitality, beverages, design, construction, manufacturing and technology, the Group keeps setting new benchmarks across industries.",
+    href: "/about",
+  },
+];

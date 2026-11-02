@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter-tight";
-import "@fontsource/instrument-serif/400.css";
-import "@fontsource/instrument-serif/400-italic.css";
 import "lenis/dist/lenis.css";
 import "./globals.css";
 import Shell from "@/components/Shell";
@@ -19,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#00030c",
+  themeColor: "#3d3a86",
   colorScheme: "dark",
 };
 
