@@ -5,7 +5,8 @@
 export const RIBBON_LENGTH = 104;
 export const INTRO_X = -18; // where the particle "1977" floats, left of the ribbon
 export const JOURNEY_START_X = 4;
-export const JOURNEY_END_X = RIBBON_LENGTH - 8;
+export const JOURNEY_END_X = RIBBON_LENGTH - 4; // the camera finishes facing the glass mark
+export const MARK_X = RIBBON_LENGTH - 2.5;
 
 // Journey progress (0..1) is split into the intro hold, the glide to the
 // ribbon, and the travel along it.
@@ -43,7 +44,7 @@ export function progressForX(x: number) {
 /** World x of milestone i of n, spread evenly along the travelled stretch. */
 export function milestoneX(i: number, n: number) {
   const a = JOURNEY_START_X + 6;
-  const b = JOURNEY_END_X - 2;
+  const b = JOURNEY_END_X - 8; // last ring, then the mark
   return a + ((b - a) * i) / Math.max(1, n - 1);
 }
 

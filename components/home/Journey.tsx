@@ -27,6 +27,7 @@ export default function Journey() {
   const stage = useRef<HTMLDivElement>(null);
   const intro = useRef<HTMLDivElement>(null);
   const hud = useRef<HTMLDivElement>(null);
+  const outro = useRef<HTMLDivElement>(null);
   const nodeEls = useRef<(HTMLButtonElement | null)[]>([]);
   const yearEls = useRef<(HTMLButtonElement | null)[]>([]);
   const fill = useRef<HTMLDivElement>(null);
@@ -69,6 +70,12 @@ export default function Journey() {
             const o = smooth(P_RIBBON_START - 0.03, P_RIBBON_START + 0.01, p);
             hud.current.style.opacity = String(o);
             hud.current.style.visibility = o < 0.01 ? "hidden" : "visible";
+          }
+          if (outro.current) {
+            const o = smooth(0.95, 0.995, p);
+            outro.current.style.opacity = String(o);
+            outro.current.style.transform = `translate3d(0, ${30 * (1 - o)}px, 0)`;
+            outro.current.style.visibility = o < 0.01 ? "hidden" : "visible";
           }
           if (fill.current) fill.current.style.transform = `scaleX(${clamp01((p - P_RIBBON_START) / (1 - P_RIBBON_START))})`;
         },
@@ -200,11 +207,31 @@ export default function Journey() {
               <span className="node__stem" aria-hidden="true" />
               <span className="node__year">{ms.year}</span>
               <span className="node__card" aria-hidden="true">
-                <span className="node__title">{ms.title}</span>
-                <span className="node__tag">{ms.tag}</span>
+                <span className="node__photo">
+                  {ms.venture ? (
+                    <Image src={photo(ms.venture)} alt="" fill sizes="280px" />
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src="/media/group-mark-white.png" alt="" className="node__mark" />
+                  )}
+                </span>
+                <span className="node__text">
+                  <span className="node__tag">{ms.tag}</span>
+                  <span className="node__title">{ms.title}</span>
+                  <span className="node__open">Open story →</span>
+                </span>
               </span>
             </button>
           ))}
+        </div>
+
+        <div ref={outro} className="journey__outro" style={{ visibility: "hidden" }}>
+          <p className="eyebrow">Shree Jalaram Group · Since 1977</p>
+          <p className="journey__outro-title">
+            One legacy.
+            <br />
+            Many futures.
+          </p>
         </div>
 
         <div ref={hud} className="journey__hud" style={{ visibility: "hidden" }}>

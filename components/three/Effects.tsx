@@ -45,7 +45,7 @@ export default function Effects({ bloom }: { bloom: boolean }) {
     const target = new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType });
     const c = new EffectComposer(gl, target);
     c.addPass(new RenderPass(scene, camera));
-    const b = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.85, 0.55, 0.42);
+    const b = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.6, 0.5, 0.5);
     if (bloom) c.addPass(b);
     c.addPass(new OutputPass());
     const g = new ShaderPass(GrainShader);

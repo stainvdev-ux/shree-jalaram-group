@@ -92,7 +92,7 @@ const vertexShader = /* glsl */ `
     gl_Position = projectionMatrix * mv;
     gl_PointSize = uSize * (0.5 + aRand.y) * uPixelRatio / -mv.z;
     vFront = smoothstep(-0.9, 0.9, position.z);
-    vAlpha = a * (1.0 - d) * (0.7 + aRand.z * 0.3);
+    vAlpha = a * (1.0 - d) * (0.55 + aRand.z * 0.3);
   }
 `;
 

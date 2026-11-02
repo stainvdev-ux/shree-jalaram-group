@@ -36,14 +36,15 @@ export default function CameraRig() {
     const dist = (narrow ? 15 : 10.5) + (1 - onRibbon) * (narrow ? 6 : 1.5);
     const ribbonY = centerY(x, t);
 
+    const lift = scene.mode === "ambient" ? 1.9 : 0;
     const tx = x + scene.pointer.x * 0.35;
-    const ty = THREE.MathUtils.lerp(0.3, ribbonY * 0.55, onRibbon) + scene.pointer.y * 0.25;
+    const ty = THREE.MathUtils.lerp(0.3, ribbonY * 0.55, onRibbon) + scene.pointer.y * 0.25 + lift;
     camera.position.x += (tx - camera.position.x) * ease(0.07);
     camera.position.y += (ty - camera.position.y) * ease(0.05);
     camera.position.z += (dist - camera.position.z) * ease(0.05);
 
     const lx = x + (scene.mode === "ambient" ? 1.5 : 0);
-    const ly = THREE.MathUtils.lerp(0.3, ribbonY * 0.8, onRibbon);
+    const ly = THREE.MathUtils.lerp(0.3, ribbonY * 0.8, onRibbon) + lift;
     look.current.x += (lx - look.current.x) * ease(0.08);
     look.current.y += (ly - look.current.y) * ease(0.06);
     camera.lookAt(look.current);

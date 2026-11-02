@@ -9,6 +9,7 @@ import Atmosphere from "./Atmosphere";
 import IntroYear from "./IntroYear";
 import CameraRig from "./CameraRig";
 import Effects from "./Effects";
+import Mark3D from "./Mark3D";
 
 type Quality = "low" | "high";
 
@@ -36,6 +37,7 @@ export default function Experience() {
         <Atmosphere bokeh={high ? 70 : 36} dust={high ? 2600 : 1100} />
         <Ribbon strands={high ? 72 : 40} perStrand={high ? 2600 : 1200} pearls={high ? 70 : 40} />
         <IntroYear max={high ? 46000 : 20000} />
+        <Mark3D detail={high ? 8 : 4} />
         <CameraRig />
         <Effects bloom={high} />
       </Canvas>
